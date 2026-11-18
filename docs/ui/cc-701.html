@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cannon &amp; Cutlass · UI-Entwürfe</title>
+    <link rel="stylesheet" href="cc-701.css">
+    <script src="cc-701.js" defer></script>
+</head>
+<body>
+    <header class="shell masthead">
+        <p class="eyebrow">UI-Entwürfe</p>
+        <h1>Cannon &amp; Cutlass</h1>
+        <nav class="navigation" aria-label="Entwurfsansichten">
+            <a href="#menu">Hauptmenü</a>
+            <a href="#placement">Aufstellung</a>
+            <a href="#match">Rastermatch</a>
+        </nav>
+    </header>
+
+    <main class="shell">
+        <section id="menu" aria-labelledby="menu-title">
+            <h2 id="menu-title">Hauptmenü</h2>
+            <div class="menu-layout">
+                <div class="play-column">
+                    <div class="art-space" aria-label="Vorgesehener Platz für das Piratenmotiv" role="img">
+                        <span aria-hidden="true">✧</span>
+                        <small aria-hidden="true">Piratenmotiv</small>
+                    </div>
+                    <a class="control primary" href="#placement">Spielen</a>
+                </div>
+                <article class="panel captain">
+                    <p class="eyebrow">Captain</p>
+                    <h3>Noch kein Captain</h3>
+                    <button class="control" disabled>Captain erstellen</button>
+                </article>
+                <article class="panel fleet">
+                    <p class="eyebrow">Flotte</p>
+                    <h3>Standarddeck</h3>
+                    <div class="deck-card" data-selected>
+                        <strong>Aktives Deck</strong>
+                        <p>5 Schiffe · 5 / 4 / 3 / 3 / 2 Felder</p>
+                    </div>
+                    <button class="control" disabled>Flotte verwalten</button>
+                </article>
+            </div>
+        </section>
+
+        <section id="placement" aria-labelledby="placement-title">
+            <h2 id="placement-title">Flotte aufstellen</h2>
+            <div class="placement-layout">
+                <div class="panel placement-controls">
+                    <h3>Standarddeck</h3>
+                    <p>1 von 5 Schiffen platziert</p>
+                    <ul class="ship-list">
+                        <li>Schiff 1 <small>5 Felder · Platziert</small></li>
+                        <li><button class="control" type="button" aria-pressed="true">Schiff 2 <small>4 Felder · Ausgewählt</small></button></li>
+                        <li><button class="control" type="button" aria-pressed="false">Schiff 3 <small>3 Felder</small></button></li>
+                        <li><button class="control" type="button" aria-pressed="false">Schiff 4 <small>3 Felder</small></button></li>
+                        <li><button class="control" type="button" aria-pressed="false">Schiff 5 <small>2 Felder</small></button></li>
+                    </ul>
+                    <button class="control" type="button" disabled>Match starten</button>
+                </div>
+                <div class="panel">
+                    <h3>Deine Flotte</h3>
+                    <p>Vorschau · <kbd>X</kbd> waagerecht · <kbd>Y</kbd> senkrecht</p>
+                    <p class="turn-note" id="placement-note" aria-live="polite">Schiff 2 auf C6 setzen.</p>
+                    <table class="board" id="placement-board" aria-label="Dein Aufstellungsraster"></table>
+                    <div class="example-controls" role="group" aria-label="Blueprint-Beispiele">
+                        <button class="control" type="button" data-preview="valid" aria-pressed="true">Gültig</button>
+                        <button class="control" type="button" data-preview="overlap" aria-pressed="false">Überlappung</button>
+                        <button class="control" type="button" data-preview="edge" aria-pressed="false">Überstand</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="match" aria-labelledby="match-title">
+            <h2 id="match-title">Rastermatch</h2>
+            <div class="match-layout">
+                <aside class="panel attack-panel" aria-labelledby="turn-title">
+                    <h3 id="turn-title">Du bist am Zug</h3>
+                    <p>Wähle ein Feld im gegnerischen Gewässer.</p>
+                    <h4>Angriffe · Schiff 1</h4>
+                    <button class="control" type="button" aria-pressed="true">Standardschuss <small>0 Totenschädel · Ausgewählt</small></button>
+                    <button class="control" type="button" disabled>Spezialangriff <small>Gesperrt</small></button>
+                    <div class="skull-bar">
+                        <p><strong>5 / 8 Totenschädel</strong></p>
+                        <div class="skull-slots" aria-hidden="true">
+                            <span class="filled"></span><span class="filled"></span><span class="filled"></span>
+                            <span class="filled"></span><span class="filled"></span>
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </aside>
+                <div class="panel">
+                    <h3>Gegnerisches Gewässer</h3>
+                    <p>4 Schiffe übrig</p>
+                    <table class="board" id="enemy-board" aria-label="Gegnerisches Raster"></table>
+                    <ul class="legend" aria-label="Zeichenerklärung">
+                        <li><span class="cell miss">·</span> Fehlschuss</li>
+                        <li><span class="cell hit">×</span> Treffer</li>
+                        <li><span class="cell sunk">⊗</span> Versenkt</li>
+                    </ul>
+                </div>
+                <div class="panel own-board">
+                    <h3>Deine Flotte</h3>
+                    <p>5 Schiffe übrig</p>
+                    <table class="board" id="own-board" aria-label="Eigenes Raster"></table>
+                    <ul class="legend" aria-label="Zeichenerklärung">
+                        <li><span class="cell ship">■</span> Schiff</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

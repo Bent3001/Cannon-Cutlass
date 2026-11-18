@@ -1,0 +1,10 @@
+[package]
+name = "cannon-cutlass-web"
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+axum = "0.8"
+game-core = { path = "../game-core" }
+maud = { version = "0.27", features = ["axum"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "net"] }

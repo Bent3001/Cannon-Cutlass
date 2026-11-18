@@ -11,7 +11,7 @@ struct Asset {
     body: Bytes,
 }
 
-fn assets() -> io::Result<[Asset; 4]> {
+fn assets() -> io::Result<[Asset; 5]> {
     let generated = Path::new("target/browser");
     let read_generated = |name| {
         let path = generated.join(name);
@@ -32,6 +32,11 @@ fn assets() -> io::Result<[Asset; 4]> {
             name: "app.js",
             content_type: "text/javascript; charset=utf-8",
             body: Bytes::from_static(include_bytes!("../assets/app.js")),
+        },
+        Asset {
+            name: "deck-store.js",
+            content_type: "text/javascript; charset=utf-8",
+            body: Bytes::from_static(include_bytes!("../assets/deck-store.js")),
         },
         Asset {
             name: "game.js",

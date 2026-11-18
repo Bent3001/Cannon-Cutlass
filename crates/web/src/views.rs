@@ -30,7 +30,8 @@ pub fn home() -> Markup {
                             p { "Wähle ein Schiff und setze es auf ein Startfeld. Es erstreckt sich nach rechts oder unten." }
                             div class="fleet" role="group" aria-label="Schiff auswählen" {
                                 @for (index, length) in STANDARD_FLEET_LENGTHS.iter().enumerate() {
-                                    button type="button" data-ship=(index) data-length=(length) aria-pressed="false" {
+                                    button type="button" data-ship=(index) data-length=(length)
+                                        data-deck-ship=(format!("standard-{index}")) aria-pressed="false" {
                                         "Schiff " (index + 1)
                                         span { (length) " Felder" }
                                         span class="placed" hidden { "Platziert" }

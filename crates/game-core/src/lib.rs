@@ -1,16 +1,19 @@
 //! Zugbasierte Regeln und Spielersichten für Cannon & Cutlass.
 
 mod board;
+mod fleet;
 mod solo;
 
 use board::Board;
 use serde::Serialize;
 
 pub use board::{Cell, Coord, Orientation, ShotOutcome};
+pub use fleet::{
+    STANDARD_FLEET_IDS, STANDARD_FLEET_LENGTHS, TEST_BOAT_ARENA_PROFILE, TestBoatArenaProfile,
+};
 pub use solo::SoloMatch;
 
 pub const STANDARD_BOARD_SIZE: usize = 10;
-pub const STANDARD_FLEET_LENGTHS: [usize; 5] = [5, 4, 3, 3, 2];
 pub const SKULLS_PER_TURN: u8 = 1;
 pub const MAX_SKULLS: u8 = 8;
 pub const STANDARD_SHOT_COST: u8 = 0;

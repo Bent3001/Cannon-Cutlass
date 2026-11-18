@@ -1,4 +1,6 @@
-use game_core::{STANDARD_BOARD_SIZE, STANDARD_FLEET_LENGTHS, STANDARD_SHOT_COST};
+use game_core::{
+    STANDARD_BOARD_SIZE, STANDARD_FLEET_IDS, STANDARD_FLEET_LENGTHS, STANDARD_SHOT_COST,
+};
 use maud::{DOCTYPE, Markup, html};
 
 pub fn home() -> Markup {
@@ -29,10 +31,10 @@ pub fn home() -> Markup {
                             h2 id="placement-title" { "Flotte aufstellen" }
                             p { "Wähle ein Schiff und setze es auf ein Startfeld. Es erstreckt sich nach rechts oder unten." }
                             div class="fleet" role="group" aria-label="Schiff auswählen" {
-                                @for (index, length) in STANDARD_FLEET_LENGTHS.iter().enumerate() {
+                                @for (index, (id, length)) in STANDARD_FLEET_IDS.iter().zip(STANDARD_FLEET_LENGTHS).enumerate() {
                                     button type="button" data-ship=(index) data-length=(length)
-                                        data-deck-ship=(format!("standard-{index}")) aria-pressed="false" {
-                                        "Schiff " (index + 1)
+                                        data-deck-ship=(id) data-name=(format!("Testboot {length}")) aria-pressed="false" {
+                                        "Testboot " (length)
                                         span { (length) " Felder" }
                                         span class="placed" hidden { "Platziert" }
                                     }

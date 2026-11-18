@@ -87,7 +87,7 @@ fn invalid_placement_preserves_the_fleet_and_start_requires_both_fleets() {
     game.place_ship(Player::First, 0, coord(0, 0), Orientation::Horizontal)
         .unwrap();
     assert_eq!(
-        game.place_ship(Player::First, 0, coord(9, 9), Orientation::Vertical),
+        game.place_ship(Player::First, 0, coord(0, 5), Orientation::Vertical),
         Err(RuleError::OutsideBoard)
     );
     assert_eq!(
@@ -103,8 +103,36 @@ fn invalid_placement_preserves_the_fleet_and_start_requires_both_fleets() {
     assert_eq!(view.placed, [true, false, false, false, false]);
     assert_eq!(
         view.own.iter().filter(|&&cell| cell == Cell::Ship).count(),
-        5
+        6
     );
+}
+
+#[test]
+fn every_test_boat_fits_exactly_at_both_board_edges() {
+    assert_eq!(STANDARD_FLEET_LENGTHS, [6, 5, 4, 3, 2]);
+    for (ship, length) in STANDARD_FLEET_LENGTHS.into_iter().enumerate() {
+        let edge = 10 - length;
+        for (orientation, valid, outside) in [
+            (Orientation::Horizontal, coord(edge, 9), coord(edge + 1, 9)),
+            (Orientation::Vertical, coord(9, edge), coord(9, edge + 1)),
+        ] {
+            let mut game = Match::default();
+            game.place_ship(Player::First, ship, valid, orientation)
+                .unwrap();
+            assert_eq!(
+                game.place_ship(Player::First, ship, outside, orientation),
+                Err(RuleError::OutsideBoard)
+            );
+            assert_eq!(
+                game.view(Player::First)
+                    .own
+                    .iter()
+                    .filter(|&&cell| cell == Cell::Ship)
+                    .count(),
+                length
+            );
+        }
+    }
 }
 
 #[test]
@@ -202,6 +230,9 @@ fn solo_match_auto_places_five_ships_and_the_ai_replies_at_most_once_per_shot() 
     for seed in [0, 1, 42, u32::MAX] {
         let mut game = SoloMatch::new(seed);
         game.auto_place().unwrap();
+        let mut replay = SoloMatch::new(seed);
+        replay.auto_place().unwrap();
+        assert!(game.view().own == replay.view().own);
         assert_eq!(game.view().placed, [true; 5]);
         assert_eq!(
             game.view()
@@ -209,7 +240,7 @@ fn solo_match_auto_places_five_ships_and_the_ai_replies_at_most_once_per_shot() 
                 .iter()
                 .filter(|&&cell| cell == Cell::Ship)
                 .count(),
-            17
+            20
         );
         game.start().unwrap();
         let mut ai_targets = Vec::new();

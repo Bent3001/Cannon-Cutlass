@@ -112,7 +112,7 @@ impl SoloMatch {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ShotOutcome;
+    use crate::{STANDARD_FLEET_LENGTHS, ShotOutcome};
 
     #[test]
     fn a_deferred_ai_reply_can_open_another_encounter() {
@@ -137,7 +137,7 @@ mod tests {
                 .unwrap();
         }
         solo.start().unwrap();
-        for x in 0..5 {
+        for x in 0..STANDARD_FLEET_LENGTHS[0] {
             solo.game.boards[Player::Second as usize]
                 .fire(Coord::new(x, 0).unwrap())
                 .unwrap();

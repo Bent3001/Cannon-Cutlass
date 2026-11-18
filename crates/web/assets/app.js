@@ -100,7 +100,7 @@ function setup(BrowserMatch) {
 
     function place(x, y) {
         game.place(selected, x, y, vertical);
-        message.textContent = `Schiff ${selected + 1} auf ${coordinate(x, y)} gesetzt.`;
+        message.textContent = `${fleet[selected].dataset.name} auf ${coordinate(x, y)} gesetzt.`;
         const next = state.placed.findIndex((placed, index) => !placed && index !== selected);
         if (next >= 0) selected = next;
     }
@@ -144,7 +144,7 @@ function setup(BrowserMatch) {
     for (const [index, button] of fleet.entries()) {
         button.addEventListener("click", () => {
             selected = index;
-            message.textContent = `Schiff ${index + 1} gewählt (${button.dataset.length} Felder).`;
+            message.textContent = `${button.dataset.name} gewählt (${button.dataset.length} Felder).`;
             render();
         });
     }

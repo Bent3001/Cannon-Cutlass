@@ -7,7 +7,7 @@ Die jüngste Projektbeschreibung legt die Reihenfolge fest. Wir beginnen mit den
 | Thema | Arbeitsstand |
 | --- | --- |
 | Gegner | Eine Person spielt im Browser gegen eine einfache KI. |
-| Raster und Flotte | Zwei 10 × 10 Raster. Pro Flotte fünf gerade Schiffe der Längen 5, 4, 3, 3 und 2. |
+| Raster und Flotte | Zwei 10 × 10 Raster. Pro Flotte fünf gerade Testboote der Längen 2, 3, 4, 5 und 6 mit insgesamt 20 Feldern. |
 | Platzierung | Horizontal oder vertikal, vollständig im Raster. Schiffe dürfen sich berühren. Belegte Felder dürfen sich nicht überschneiden. |
 | Zug | Abwechselnd ein gültiger Schuss pro Spieler. Auch nach einem Treffer wechselt der Zug. Ein bereits beschossenes Feld verbraucht keinen Zug. |
 | Totenschädel | Jeder Spieler beginnt mit null und erhält zu Beginn jedes eigenen regulären Zugs einen, einschließlich des ersten. |
@@ -19,9 +19,11 @@ Rastergröße, Schiffslängen, Platzierung, Zugwechsel und der genaue Zeitpunkt 
 
 ## Testflotte und spätere Schiffstypen
 
-Die Tabelle oben beschreibt die aktuell implementierte Flotte. Für die weitere Entwicklung sind fünf neutrale Testboote vorgesehen. Vorläufig stehen die Nummern 2 bis 6 für fünf gerade Schiffslängen von zwei bis sechs Feldern. Alle Testboote verwenden dasselbe Arenaprofil und den kostenlosen Standardschuss. [CC-801](tickets/CC-801.md)
+Die Nummern der Testboote entsprechen ihrer Länge. Bei der automatischen Platzierung kommt das längste Boot zuerst. Gespeicherte Standarddecks behalten ihre Kennungen: `standard-0` steht jetzt für Testboot 6 und die weiteren Kennungen bis `standard-4` stehen in dieser Reihenfolge für Testboot 5, 4, 3 und 2. Deckname und aktive Auswahl bleiben so erhalten. [CC-801](tickets/CC-801.md)
 
-Spezialangriffe und Arenaeigenschaften lassen sich für die Grundsystem-Abnahme in gezielten Testszenarien zuschalten. Dingy, Schaluppe, Briggantin, Galeone, Katamaran und Sturmbark folgen erst nach dieser Abnahme. Ihre Formen, Kanonen und Angriffskosten stehen in den einzelnen Schiffstickets. [CC-802](tickets/CC-802.md) · [Schiffe und Testflotte](tickets/README.md#schiffe-und-testflotte)
+Alle Testboote verwenden den kostenlosen Standardschuss und haben keine eigene Spezialfähigkeit. Für die spätere Arena-Anbindung liegt ein gemeinsames Bewegungsprofil im Spielkern. Es verwendet 70 Einheiten/s² Beschleunigung, 120 Einheiten/s² Bremswirkung, 120 Einheiten/s Höchsttempo und 2,1 rad/s Drehrate.
+
+Für die Grundsystem-Abnahme können Testszenarien später Spezialangriffe und abweichende Arenaprofile gezielt erproben. Dingy, Schaluppe, Briggantin, Galeone, Katamaran und Sturmbark folgen nach dieser Abnahme. Ihre Formen, Kanonen und Angriffskosten stehen in den einzelnen Schiffstickets. [CC-802](tickets/CC-802.md) · [Schiffe und Testflotte](tickets/README.md#schiffe-und-testflotte)
 
 ## Beschlossener UI-Ausbau
 

@@ -12,6 +12,7 @@ pub use solo::SoloMatch;
 pub const STANDARD_BOARD_SIZE: usize = 10;
 pub const STANDARD_FLEET_LENGTHS: [usize; 5] = [5, 4, 3, 3, 2];
 pub const SKULLS_PER_TURN: u8 = 1;
+pub const MAX_SKULLS: u8 = 8;
 pub const STANDARD_SHOT_COST: u8 = 0;
 const CELL_COUNT: usize = STANDARD_BOARD_SIZE * STANDARD_BOARD_SIZE;
 const FLEET_SIZE: usize = STANDARD_FLEET_LENGTHS.len();
@@ -85,6 +86,7 @@ pub struct PlayerView {
     pub placed: [bool; FLEET_SIZE],
     pub skulls: u8,
     pub enemy_skulls: u8,
+    pub max_skulls: u8,
     pub own_remaining: usize,
     pub enemy_remaining: usize,
 }
@@ -219,6 +221,7 @@ impl Match {
             placed: own.placed(),
             skulls: self.skulls[player as usize],
             enemy_skulls: self.skulls[player.opponent() as usize],
+            max_skulls: MAX_SKULLS,
             own_remaining: own.remaining(),
             enemy_remaining: enemy.remaining(),
         }
@@ -233,7 +236,13 @@ impl Match {
     }
 
     fn begin_turn(&mut self, player: Player) {
-        self.skulls[player as usize] += SKULLS_PER_TURN;
+        self.credit_skulls(player, SKULLS_PER_TURN);
         self.phase = Phase::Turn(player);
+    }
+
+    // All skull grants, including future rewards, share the same cap.
+    fn credit_skulls(&mut self, player: Player, amount: u8) {
+        let balance = &mut self.skulls[player as usize];
+        *balance = balance.saturating_add(amount).min(MAX_SKULLS);
     }
 }

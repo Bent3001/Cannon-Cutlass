@@ -1,6 +1,6 @@
 use game_core::{
-    Cell, Coord, Match, Orientation, Phase, Player, RuleError, STANDARD_FLEET_LENGTHS, ShotOutcome,
-    SoloMatch,
+    Cell, Coord, MAX_SKULLS, Match, Orientation, Phase, Player, RuleError, STANDARD_FLEET_LENGTHS,
+    ShotOutcome, SoloMatch,
 };
 
 fn coord(x: usize, y: usize) -> Coord {
@@ -54,6 +54,7 @@ fn encounter_mode_defers_the_final_win_and_does_not_credit_an_extra_turn() {
                 assert!(paused.enemy[y * 10 + x] == Cell::Sunk);
                 assert_eq!(paused.enemy_skulls, before.enemy_skulls);
                 assert_eq!(game.fire(loser, coord(9, 8)), Err(RuleError::WrongPhase));
+                assert_eq!(game.view(winner).enemy_skulls, paused.enemy_skulls);
                 game.finish_encounter(encounter.id).unwrap();
                 let resumed = game.view(winner);
                 let final_ship = y + 1 == STANDARD_FLEET_LENGTHS.len();
@@ -67,7 +68,7 @@ fn encounter_mode_defers_the_final_win_and_does_not_credit_an_extra_turn() {
                 );
                 assert_eq!(
                     resumed.enemy_skulls,
-                    before.enemy_skulls + u8::from(!final_ship)
+                    (before.enemy_skulls + u8::from(!final_ship)).min(MAX_SKULLS)
                 );
                 assert_eq!(resumed.skulls, before.skulls);
                 assert!(resumed.enemy[y * 10 + x] == Cell::Sunk);
@@ -156,11 +157,44 @@ fn the_final_sinking_finishes_the_match_without_an_extra_turn() {
     let view = game.view(Player::First);
     assert_eq!(view.state, Phase::Finished(Player::First));
     assert_eq!(view.enemy_remaining, 0);
-    assert_eq!((view.skulls, view.enemy_skulls), (17, 16));
+    assert_eq!((view.skulls, view.enemy_skulls), (8, 8));
     assert_eq!(
         game.fire(Player::Second, coord(9, 8)),
         Err(RuleError::WrongPhase)
     );
+    let after = game.view(Player::First);
+    assert_eq!((after.skulls, after.enemy_skulls), (8, 8));
+}
+
+#[test]
+fn skull_credit_caps_each_player_and_standard_shots_are_free() {
+    let mut game = ready_match();
+    for index in 0..10 {
+        let first = game.view(Player::First);
+        assert_eq!(first.max_skulls, MAX_SKULLS);
+        assert_eq!(first.skulls, (index as u8 + 1).min(8));
+        assert_eq!(first.enemy_skulls, (index as u8).min(8));
+
+        if index == 6 {
+            assert_eq!(
+                game.fire(Player::First, coord(0, 9)),
+                Err(RuleError::AlreadyTargeted)
+            );
+            let after = game.view(Player::First);
+            assert_eq!(after.state, first.state);
+            assert_eq!((after.skulls, after.enemy_skulls), (7, 6));
+        }
+
+        game.fire(Player::First, coord(index, 9)).unwrap();
+        let second = game.view(Player::Second);
+        assert_eq!(second.max_skulls, MAX_SKULLS);
+        assert_eq!(
+            (second.skulls, second.enemy_skulls),
+            (first.skulls, first.skulls)
+        );
+        game.fire(Player::Second, coord(index, 9)).unwrap();
+        assert_eq!(game.view(Player::Second).skulls, second.skulls);
+    }
 }
 
 #[test]

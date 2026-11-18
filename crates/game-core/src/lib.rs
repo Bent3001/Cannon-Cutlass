@@ -1,5 +1,6 @@
-//! Zugbasierte Regeln und Spielersichten für Cannon & Cutlass.
+//! Spielregeln und Spielersichten für Cannon & Cutlass.
 
+pub mod arena;
 mod board;
 mod fleet;
 mod solo;

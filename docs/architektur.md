@@ -22,6 +22,8 @@ Maud und der WASM-Adapter nutzen denselben Spielkern. Die Maud-Ansicht liefert d
 
 Die KI wählt zufällig aus unbeschossenen Feldern und verwendet dieselbe Schussaktion wie der menschliche Spieler. `SoloMatch::with_encounters` aktiviert den Gefechtsübergang im Kern. Der Browser nutzt bis zur Anbindung der Arena in [CC-204](tickets/CC-204.md) weiter den Rastermodus. Der WASM-Adapter reicht die geordnete Liste bestätigter Schüsse an die Oberfläche weiter. Für Platzierung und Blueprint bleibt dieselbe Feldberechnung im Kern maßgeblich. Im Browser-Prototyp liegt die Partie im Arbeitsspeicher des Tabs. Speicherstände, Accounts und eine Datenbank gehören zu späteren Meilensteinen.
 
+`BrowserArena` stellt den Bewegungsprototyp über dasselbe WASM-Modul bereit. `step` simuliert genau einen Schritt mit getrennten Eingaben für beide Schiffe. `view` liefert Kartengröße, Schrittfrequenz und die aktuelle Lage und Geschwindigkeit der Schiffe in Spielerreihenfolge. CC-204 verbindet die Gefechtssimulation mit der laufenden Partie.
+
 ## Hosting
 
 | Ziel | Ausführung |

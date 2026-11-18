@@ -1,3 +1,5 @@
+mod arena;
+
 use game_core::{Coord, Orientation, RuleError, SoloMatch};
 use wasm_bindgen::prelude::*;
 

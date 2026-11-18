@@ -39,6 +39,17 @@ Sobald der Arena-Meilenstein umgesetzt ist, pausiert das Rasterspiel nach jeder 
 
 Bis zur aktiven Schiffsauswahl in [CC-302](tickets/CC-302.md) fährt der Angreifer das eigene intakte Schiff mit der niedrigsten Kennung. Belohnungen, Wind und Entermanöver sind noch offen. Der Entwurf enthält unterschiedliche Vorschläge dazu, welche Gefechtsausgänge ein Wortduell auslösen. Diese Entscheidung fällt bei der Planung der Wortduelle.
 
+### Bewegung im Arena-Prototyp
+
+Die Arena misst 800 × 450 Spieleinheiten. Beide Schiffe starten im Stillstand auf halber Höhe, bei einem Viertel und drei Vierteln der Breite, und zeigen aufeinander. Über die Steuerung können beide Schiffe beschleunigen, bremsen und ihr Tempo halten. Sie können auch im Stand nach links oder rechts drehen. Bremsen endet bei Tempo null. An der Grenze bleibt der Schiffsmittelpunkt innerhalb der Arena. Das Schiff behält Tempo und Ausrichtung bei und kann am Rand entlangfahren oder wieder ins Feld drehen.
+
+| Prototypprofil | Beschleunigung (Einheiten/s²) | Bremswirkung (Einheiten/s²) | Höchsttempo (Einheiten/s) | Drehrate (rad/s) |
+| --- | ---: | ---: | ---: | ---: |
+| Kleines Schiff | 90 | 140 | 140 | 2,8 |
+| Großes Schiff | 55 | 100 | 100 | 1,4 |
+
+Die Simulation verarbeitet 60 gleich lange Schritte pro simulierte Sekunde. Die Werte dienen zum Erproben der Bewegung. Die Zuordnung zu Schiffstypen folgt mit [CC-208](tickets/CC-208.md).
+
 ## Spätere Mechaniken
 
 - **Spezialschüsse.** Sonar und Flächenschaden sind Kandidaten für den ersten Testangriff. Die Kosten der späteren schiffsspezifischen Angriffe stehen in den Schiffstickets. Der Totenschädel-Vorrat ist auf acht begrenzt.
